@@ -1,0 +1,17 @@
+{
+  "name": "consul-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "http",
+    "url": "https://github.com/ProjectSteward/consul-client.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "consul": "^0.29.0",
+    "uuid": "^3.1.0"
+  }
+}
