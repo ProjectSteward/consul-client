@@ -7,7 +7,7 @@ consulclient.serviceWatcher(serviceName, (err, data) => {
     console.error(err)
     return
   }
-  console.log(`service changed: ${JSON.stringify(data)}`)
+  console.log(`service ${serviceName} changed: ${JSON.stringify(data)}`)
 })
 
 consulclient.keyWatcher(keyName, (err, data) => {
@@ -17,4 +17,8 @@ consulclient.keyWatcher(keyName, (err, data) => {
   }
   console.log(`value changed: ${data}`)
 })
+
+consulclient.getKey(keyName)
+.then(value => console.log(`Value of '${keyName}' is '${value}'`)
+, err => console.error(`getKey error: ${err}`));
 

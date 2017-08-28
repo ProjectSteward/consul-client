@@ -1,6 +1,6 @@
 const ttlInterval = 10; // 10 sec
 
-const register = (consul) => (name, address, port) => {
+const register = (consul) => (name, address, port) => new Promise((resolve, reject) => {
   const id = require('uuid/v4')()
   const check = {
     ttl: ttlInterval + 's',
@@ -12,7 +12,7 @@ const register = (consul) => (name, address, port) => {
 
   consul.agent.service.register(options, err => {
     if (err) {
-      throw err
+      reject(err)
     }
 
     timerInstance = setInterval(() => {
@@ -22,15 +22,15 @@ const register = (consul) => (name, address, port) => {
         }
       })
     }, ttlInterval / 2 * 1000)
+
+    resolve({
+      stop: () => {
+        if (timerInstance != 0) {
+          clearInterval(timerInstance)
+        }
+      }
+    });
   })
-
-  const stop = () => {
-    if (timerInstance != 0) {
-      clearInterval(timerInstance)
-    }
-  }
-
-  return { stop }
-}
+})
 
 module.exports = register
